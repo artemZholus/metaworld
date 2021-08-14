@@ -124,7 +124,12 @@ class MujocoEnv(gym.Env, abc.ABC):
         assert camera_name in {"corner3", "corner", "corner2", 
             "topview", "gripperPOV", "behindGripper"}, assert_string
         if not offscreen:
-            self._get_viewer('human').render()
+            if camera_name is None:
+                camera_id = None
+            else:
+                camera_id = self.model.camera_name2id(camera_name)
+            self._get_viewer('rgb_array', offscreen=offscreen).render(*resolution, camera_id=camera_id)
+            return self.viewer.read_pixels(*resolution, depth=False)
         else:
             return self.sim.render(
                 *resolution,
@@ -137,14 +142,18 @@ class MujocoEnv(gym.Env, abc.ABC):
             glfw.destroy_window(self.viewer.window)
             self.viewer = None
 
-    def _get_viewer(self, mode):
+    def _get_viewer(self, mode, offscreen=False):
         self.viewer = self._viewers.get(mode)
         if self.viewer is None:
             if mode == 'human':
                 self.viewer = mujoco_py.MjViewer(self.sim)
+            elif 'rgb_array' in mode:
+                self.viewer = mujoco_py.MjRenderContext(self.sim, offscreen=offscreen,
+                    device_id=0, opengl_backend='egl' if offscreen else 'glfw', quiet=False)
+                self.sim.add_render_context(self.viewer)
+                self.viewer.opengl_context.make_context_current()
             self.viewer_setup()
             self._viewers[mode] = self.viewer
-        self.viewer_setup()
         return self.viewer
 
     def get_body_com(self, body_name):
