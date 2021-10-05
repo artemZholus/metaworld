@@ -1,46 +1,46 @@
 <mujocoinclude>
     <body childclass="window_base">
-      <geom material="window_red" mesh="window_h_base" pos="0 0 -0.192" />
-      <geom material="window_red" mesh="window_h_frame"/>
-      <geom class="window_col" pos="-0.216 0 0" size="0.015 0.03 0.181" type="box" />
-      <geom class="window_col" pos="0 0 -0.192" size="0.25 0.06 0.01" type="box" />
-      <geom class="window_col" pos="0.216 0 0" size="0.015 0.03 0.181" type="box" />
-      <geom class="window_col" pos="0 0 -0.166" size="0.201 0.03 0.015" type="box" />
-      <geom class="window_col" pos="0 0 0.166" size="0.201 0.03 0.015" type="box" />
+      <geom name="g_window_base_base" material="window_red" mesh="window_h_base" pos="0 0 -0.192" />
+      <geom name="g_window_base_frame" material="window_red" mesh="window_h_frame"/>
+      <geom name="g_window_base_col1" class="window_col" pos="-0.216 0 0" size="0.015 0.03 0.181" type="box" />
+      <geom name="g_window_base_col2" class="window_col" pos="0 0 -0.192" size="0.25 0.06 0.01" type="box" />
+      <geom name="g_window_base_col3" class="window_col" pos="0.216 0 0" size="0.015 0.03 0.181" type="box" />
+      <geom name="g_window_base_col4" class="window_col" pos="0 0 -0.166" size="0.201 0.03 0.015" type="box" />
+      <geom name="g_window_base_col5" class="window_col" pos="0 0 0.166" size="0.201 0.03 0.015" type="box" />
 
       <body name="windowb_a">
           <joint type="slide" range="0 .2" axis="1 0 0" name="window_slide"/>
-          <geom material="window_white" euler="1.57 0 0" pos="-0.014 -0.028 0.045" size="0.012  0.003" type="cylinder" />
-          <geom material="window_white" euler="1.57 0 0" pos="-0.014 -0.028 -0.045" size="0.012 0.003" type="cylinder" />
-          <geom material="window_white" euler="1.57 0 0" pos="-0.014 -0.06 0.045" size="0.008 0.035" type="capsule" />
-          <geom material="window_white" euler="1.57 0 0" pos="-0.014 -0.06 -0.045" size="0.008 0.035" type="capsule" />
-          <geom material="window_white" pos="-0.014 -0.095 0" size="0.008 0.045" type="capsule" />
-          <geom material="window_red" mesh="windowb_h_frame" pos="-0.104 -0.022 0" />
-          <geom material="window_glass" mesh="windowb_h_glass" pos="-0.104 -0.018 0" />
+          <geom name="g_window_a_white1" material="window_white" euler="1.57 0 0" pos="-0.014 -0.028 0.045" size="0.012  0.003" type="cylinder" />
+          <geom name="g_window_a_white2" material="window_white" euler="1.57 0 0" pos="-0.014 -0.028 -0.045" size="0.012 0.003" type="cylinder" />
+          <geom name="g_window_a_white3" material="window_white" euler="1.57 0 0" pos="-0.014 -0.06 0.045" size="0.008 0.035" type="capsule" />
+          <geom name="g_window_a_white4" material="window_white" euler="1.57 0 0" pos="-0.014 -0.06 -0.045" size="0.008 0.035" type="capsule" />
+          <geom name="g_window_a_white5" material="window_white" pos="-0.014 -0.095 0" size="0.008 0.045" type="capsule" />
+          <geom name="g_window_a_frame" material="window_red" mesh="windowb_h_frame" pos="-0.104 -0.022 0" />
+          <geom name="g_window_a_glass" material="window_glass" mesh="windowb_h_glass" pos="-0.104 -0.018 0" />
 
-          <geom class="window_col" euler="1.57 0 0" pos="-0.014 -0.028 0.045" size="0.012  0.003" type="cylinder" />
-          <geom class="window_col" euler="1.57 0 0" pos="-0.014 -0.028 -0.045" size="0.012 0.003" type="cylinder" />
-          <geom class="window_col" euler="1.57 0 0" pos="-0.014 -0.06 0.045" size="0.008 0.035" type="capsule" />
-          <geom class="window_col" euler="1.57 0 0" pos="-0.014 -0.06 -0.045" size="0.008 0.035" type="capsule" />
-          <geom class="window_col" pos="-0.014 -0.095 0" size="0.008 0.045" type="capsule" />
-          <geom class="window_col" pos="-0.014 -0.013 0" size="0.014 0.012 0.15" type="box" />
-          <geom class="window_col" pos="-0.19 -0.013 0" size="0.01 0.012 0.15" type="box" />
-          <geom class="window_col" pos="-0.104 -0.013 0.14" size="0.076 0.012 0.01" type="box" />
-          <geom class="window_col" pos="-0.104 -0.013 -0.14" size="0.076 0.012 0.01" type="box" />
-          <geom class="window_col" pos="-0.104 -0.018 0" size="0.076 0.001 0.13" type="box" />
-          <geom class="window_col" pos="-0.104 -0.022 0" size="0.076 0.003 0.005" type="box" />
+          <geom name="g_window_a_col1" class="window_col" euler="1.57 0 0" pos="-0.014 -0.028 0.045" size="0.012  0.003" type="cylinder" />
+          <geom name="g_window_a_col2" class="window_col" euler="1.57 0 0" pos="-0.014 -0.028 -0.045" size="0.012 0.003" type="cylinder" />
+          <geom name="g_window_a_col3" class="window_col" euler="1.57 0 0" pos="-0.014 -0.06 0.045" size="0.008 0.035" type="capsule" />
+          <geom name="g_window_a_col4" class="window_col" euler="1.57 0 0" pos="-0.014 -0.06 -0.045" size="0.008 0.035" type="capsule" />
+          <geom name="g_window_a_col5" class="window_col" pos="-0.014 -0.095 0" size="0.008 0.045" type="capsule" />
+          <geom name="g_window_a_col6" class="window_col" pos="-0.014 -0.013 0" size="0.014 0.012 0.15" type="box" />
+          <geom name="g_window_a_col7" class="window_col" pos="-0.19 -0.013 0" size="0.01 0.012 0.15" type="box" />
+          <geom name="g_window_a_col8" class="window_col" pos="-0.104 -0.013 0.14" size="0.076 0.012 0.01" type="box" />
+          <geom name="g_window_a_col9" class="window_col" pos="-0.104 -0.013 -0.14" size="0.076 0.012 0.01" type="box" />
+          <geom name="g_window_a_col10" class="window_col" pos="-0.104 -0.018 0" size="0.076 0.001 0.13" type="box" />
+          <geom name="g_window_a_col11" class="window_col" pos="-0.104 -0.022 0" size="0.076 0.003 0.005" type="box" />
           <site name="handleOpenStart" pos="-0.04 -0.095 0." size="0.005" rgba="1 0 0 1"/>
           <site name="handleCloseStart" pos="0.01 -0.095 0." size="0.005" rgba="0 1 0 1"/>
       </body>
       <body name="windowb_b" pos="0.1 0.013 0">
-          <geom material="window_red" mesh="windowa_h_frame"/>
-          <geom material="window_glass" mesh="windowa_h_glass" pos="0 -0.005 0" />
-          <geom class="window_col" pos="0 0 -0.14" size="0.08 0.012 0.01" type="box" />
-          <geom class="window_col" pos="0 0 0.14" size="0.08 0.012 0.01" type="box" />
-          <geom class="window_col" pos="0 -0.005 0" size="0.08 0.001 0.13" type="box" />
-          <geom class="window_col" pos="-0.0 -0.009 0" size="0.08 0.003 0.005" type="box" />
-          <geom class="window_col" pos="-0.09 0 0" size="0.01 0.012 0.15" type="box" />
-          <geom class="window_col" pos="0.09 0 0" size="0.01 0.012 0.15" type="box" />
+          <geom name="g_window_b_red" material="window_red" mesh="windowa_h_frame"/>
+          <geom name="g_window_b_glass" material="window_glass" mesh="windowa_h_glass" pos="0 -0.005 0" />
+          <geom name="g_window_b_col1" class="window_col" pos="0 0 -0.14" size="0.08 0.012 0.01" type="box" />
+          <geom name="g_window_b_col2" class="window_col" pos="0 0 0.14" size="0.08 0.012 0.01" type="box" />
+          <geom name="g_window_b_col3" class="window_col" pos="0 -0.005 0" size="0.08 0.001 0.13" type="box" />
+          <geom name="g_window_b_col4" class="window_col" pos="-0.0 -0.009 0" size="0.08 0.003 0.005" type="box" />
+          <geom name="g_window_b_col5" class="window_col" pos="-0.09 0 0" size="0.01 0.012 0.15" type="box" />
+          <geom name="g_window_b_col6" class="window_col" pos="0.09 0 0" size="0.01 0.012 0.15" type="box" />
       </body>
     </body>
 </mujocoinclude>
