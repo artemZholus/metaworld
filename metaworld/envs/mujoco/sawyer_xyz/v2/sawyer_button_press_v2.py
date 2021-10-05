@@ -7,17 +7,19 @@ from metaworld.envs.mujoco.sawyer_xyz.sawyer_xyz_env import SawyerXYZEnv, _asser
 
 
 class SawyerButtonPressEnvV2(SawyerXYZEnv):
-    def __init__(self):
+    def __init__(self, transparent_sawyer=False):
 
         hand_low = (-0.5, 0.40, 0.05)
         hand_high = (0.5, 1, 0.5)
         obj_low = (-0.1, 0.85, 0.115)
         obj_high = (0.1, 0.9, 0.115)
 
+        self._transparent_sawyer=transparent_sawyer
         super().__init__(
             self.model_name,
             hand_low=hand_low,
             hand_high=hand_high,
+            transparent_sawyer=transparent_sawyer,
         )
 
         self.init_config = {
@@ -38,7 +40,8 @@ class SawyerButtonPressEnvV2(SawyerXYZEnv):
 
     @property
     def model_name(self):
-        return full_v2_path_for('sawyer_xyz/sawyer_button_press.xml')
+        return full_v2_path_for('sawyer_xyz/sawyer_button_press.xml',
+            transparent_sawyer=self._transparent_sawyer)
 
     @_assert_task_is_set
     def evaluate_state(self, obs, action):

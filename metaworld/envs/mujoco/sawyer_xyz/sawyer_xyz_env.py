@@ -97,6 +97,7 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
             mocap_high=None,
             action_scale=1./100,
             action_rot_scale=1.,
+            transparent_sawyer=False,
     ):
         super().__init__(model_name, frame_skip=frame_skip)
         self.random_init = True
@@ -120,6 +121,8 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
         self.discrete_goal_space = None
         self.discrete_goals = []
         self.active_discrete_goal = None
+
+        self._transparent_sawyer = transparent_sawyer
 
         self.init_left_pad = self.get_body_com('leftpad')
         self.init_right_pad = self.get_body_com('rightpad')

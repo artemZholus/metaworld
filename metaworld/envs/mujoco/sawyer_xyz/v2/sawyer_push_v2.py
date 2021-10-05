@@ -22,7 +22,7 @@ class SawyerPushEnvV2(SawyerXYZEnv):
     """
     TARGET_RADIUS=0.05
 
-    def __init__(self):
+    def __init__(self, transparent_sawyer=False):
         hand_low = (-0.5, 0.40, 0.05)
         hand_high = (0.5, 1, 0.5)
         obj_low = (-0.1, 0.6, 0.02)
@@ -30,10 +30,12 @@ class SawyerPushEnvV2(SawyerXYZEnv):
         goal_low = (-0.1, 0.8, 0.01)
         goal_high = (0.1, 0.9, 0.02)
 
+        self._transparent_sawyer=transparent_sawyer
         super().__init__(
             self.model_name,
             hand_low=hand_low,
             hand_high=hand_high,
+            transparent_sawyer=transparent_sawyer,
         )
 
         self.init_config = {
@@ -62,7 +64,8 @@ class SawyerPushEnvV2(SawyerXYZEnv):
 
     @property
     def model_name(self):
-        return full_v2_path_for('sawyer_xyz/sawyer_push_v2.xml')
+        return full_v2_path_for('sawyer_xyz/sawyer_push_v2.xml',
+            transparent_sawyer=self._transparent_sawyer)
 
     @_assert_task_is_set
     def evaluate_state(self, obs, action):

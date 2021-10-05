@@ -20,7 +20,7 @@ class SawyerPickPlaceEnvV2(SawyerXYZEnv):
             i.e. (self._target_pos - pos_hand)
         - (6/15/20) Separated reach-push-pick-place into 3 separate envs.
     """
-    def __init__(self):
+    def __init__(self, transparent_sawyer=False):
         goal_low = (-0.1, 0.8, 0.05)
         goal_high = (0.1, 0.9, 0.3)
         hand_low = (-0.5, 0.40, 0.05)
@@ -28,10 +28,12 @@ class SawyerPickPlaceEnvV2(SawyerXYZEnv):
         obj_low = (-0.1, 0.6, 0.02)
         obj_high = (0.1, 0.7, 0.02)
 
+        self._transparent_sawyer=transparent_sawyer
         super().__init__(
             self.model_name,
             hand_low=hand_low,
             hand_high=hand_high,
+            transparent_sawyer=transparent_sawyer
         )
 
         self.init_config = {
@@ -57,7 +59,8 @@ class SawyerPickPlaceEnvV2(SawyerXYZEnv):
 
     @property
     def model_name(self):
-        return full_v2_path_for('sawyer_xyz/sawyer_pick_place_v2.xml')
+        return full_v2_path_for('sawyer_xyz/sawyer_pick_place_v2.xml', 
+            transparent_sawyer=self._transparent_sawyer)
 
     @_assert_task_is_set
     def evaluate_state(self, obs, action):

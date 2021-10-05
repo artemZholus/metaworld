@@ -75,7 +75,7 @@ def _encode_task(env_name, data):
     return Task(env_name=env_name, data=pickle.dumps(data))
 
 
-def _make_tasks(classes, args_kwargs, kwargs_override, seed=None):
+def _make_tasks(classes, args_kwargs, kwargs_override, transparent_sawyer=False, seed=None):
     if seed is not None:
         st0 = np.random.get_state()
         np.random.seed(seed)
@@ -83,7 +83,7 @@ def _make_tasks(classes, args_kwargs, kwargs_override, seed=None):
     for (env_name, args) in args_kwargs.items():
         assert len(args['args']) == 0
         env_cls = classes[env_name]
-        env = env_cls()
+        env = env_cls(transparent_sawyer=transparent_sawyer)
         env._freeze_rand_vec = False
         env._set_task_called = True
         rand_vecs = []
@@ -118,7 +118,7 @@ class ML1(Benchmark):
 
     ENV_NAMES = _ml1_env_names()
 
-    def __init__(self, env_name, seed=None):
+    def __init__(self, env_name, transparent_sawyer=False, seed=None):
         super().__init__()
         if not env_name in _env_dict.ALL_V2_ENVIRONMENTS:
             raise ValueError(f"{env_name} is not a V2 environment")
@@ -131,10 +131,12 @@ class ML1(Benchmark):
         self._train_tasks = _make_tasks(self._train_classes,
                                         {env_name: args_kwargs},
                                         _ML_OVERRIDE,
+                                        transparent_sawyer=transparent_sawyer,
                                         seed=seed)
         self._test_tasks = _make_tasks(
             self._test_classes, {env_name: args_kwargs},
             _ML_OVERRIDE,
+            transparent_sawyer=transparent_sawyer,
             seed=(seed + 1 if seed is not None else seed))
 
 
@@ -142,7 +144,7 @@ class MT1(Benchmark):
 
     ENV_NAMES = _ml1_env_names()
 
-    def __init__(self, env_name, seed=None):
+    def __init__(self, env_name, transparent_sawyer=False, seed=None):
         super().__init__()
         if not env_name in _env_dict.ALL_V2_ENVIRONMENTS:
             raise ValueError(f"{env_name} is not a V2 environment")
@@ -155,60 +157,67 @@ class MT1(Benchmark):
         self._train_tasks = _make_tasks(self._train_classes,
                                         {env_name: args_kwargs},
                                         _MT_OVERRIDE,
+                                        transparent_sawyer=transparent_sawyer,
                                         seed=seed)
         self._test_tasks = []
 
 
 class ML10(Benchmark):
-    def __init__(self, seed=None):
+    def __init__(self, transparent_sawyer=False, seed=None):
         super().__init__()
         self._train_classes = _env_dict.ML10_V2['train']
         self._test_classes = _env_dict.ML10_V2['test']
         train_kwargs = _env_dict.ml10_train_args_kwargs
         self._train_tasks = _make_tasks(self._train_classes, train_kwargs,
                                         _ML_OVERRIDE,
+                                        transparent_sawyer=transparent_sawyer,
                                         seed=seed)
         test_kwargs = _env_dict.ml10_test_args_kwargs
         self._test_tasks = _make_tasks(self._test_classes, test_kwargs,
                                        _ML_OVERRIDE,
+                                       transparent_sawyer=transparent_sawyer,
                                        seed=seed)
 
 
 class ML45(Benchmark):
-    def __init__(self, seed=None):
+    def __init__(self, transparent_sawyer=False, seed=None):
         super().__init__()
         self._train_classes = _env_dict.ML45_V2['train']
         self._test_classes = _env_dict.ML45_V2['test']
         train_kwargs = _env_dict.ml45_train_args_kwargs
         self._train_tasks = _make_tasks(self._train_classes, train_kwargs,
                                         _ML_OVERRIDE,
+                                        transparent_sawyer=transparent_sawyer,
                                         seed=seed)
         test_kwargs = _env_dict.ml45_test_args_kwargs
         self._test_tasks = _make_tasks(self._test_classes, test_kwargs,
                                        _ML_OVERRIDE,
+                                       transparent_sawyer=transparent_sawyer,
                                        seed=seed)
 
 
 class MT10(Benchmark):
-    def __init__(self, seed=None):
+    def __init__(self, transparent_sawyer=False, seed=None):
         super().__init__()
         self._train_classes = _env_dict.MT10_V2
         self._test_classes = OrderedDict()
         train_kwargs = _env_dict.MT10_V2_ARGS_KWARGS
         self._train_tasks = _make_tasks(self._train_classes, train_kwargs,
                                         _MT_OVERRIDE,
+                                        transparent_sawyer=transparent_sawyer,
                                         seed=seed)
         self._test_tasks = []
 
 
 class MT50(Benchmark):
-    def __init__(self, seed=None):
+    def __init__(self, transparent_sawyer=False, seed=None):
         super().__init__()
         self._train_classes = _env_dict.MT50_V2
         self._test_classes = OrderedDict()
         train_kwargs = _env_dict.MT50_V2_ARGS_KWARGS
         self._train_tasks = _make_tasks(self._train_classes, train_kwargs,
                                         _MT_OVERRIDE,
+                                        transparent_sawyer=transparent_sawyer,
                                         seed=seed)
         self._test_tasks = []
 

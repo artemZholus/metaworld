@@ -18,7 +18,7 @@ class SawyerWindowCloseEnvV2(SawyerXYZEnv):
         - (6/15/20) Increased max_path_length from 150 to 200
     """
     TARGET_RADIUS = 0.05
-    def __init__(self):
+    def __init__(self, transparent_sawyer=False):
 
         liftThresh = 0.02
         hand_low = (-0.5, 0.40, 0.05)
@@ -26,10 +26,12 @@ class SawyerWindowCloseEnvV2(SawyerXYZEnv):
         obj_low = (0., 0.75, 0.2)
         obj_high = (0., 0.9, 0.2)
 
+        self._transparent_sawyer=transparent_sawyer
         super().__init__(
             self.model_name,
             hand_low=hand_low,
             hand_high=hand_high,
+            transparent_sawyer=transparent_sawyer,
         )
 
         self.init_config = {
@@ -58,7 +60,8 @@ class SawyerWindowCloseEnvV2(SawyerXYZEnv):
 
     @property
     def model_name(self):
-        return full_v2_path_for('sawyer_xyz/sawyer_window_horizontal.xml')
+        return full_v2_path_for('sawyer_xyz/sawyer_window_horizontal.xml',
+            transparent_sawyer=self._transparent_sawyer)
 
     @_assert_task_is_set
     def evaluate_state(self, obs, action):
