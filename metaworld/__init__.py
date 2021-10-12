@@ -83,7 +83,7 @@ def _make_tasks(classes, args_kwargs, kwargs_override, transparent_sawyer=False,
     for (env_name, args) in args_kwargs.items():
         assert len(args['args']) == 0
         env_cls = classes[env_name]
-        env = env_cls(transparent_sawyer=transparent_sawyer)
+        env = env_cls()
         env._freeze_rand_vec = False
         env._set_task_called = True
         rand_vecs = []
