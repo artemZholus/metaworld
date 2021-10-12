@@ -370,7 +370,7 @@ MT10_V2 = OrderedDict(
      ('door-open-v2', SawyerDoorEnvV2),
      ('drawer-open-v2', SawyerDrawerOpenEnvV2),
      ('drawer-close-v2', SawyerDrawerCloseEnvV2),
-     ('button-press-topdown-v2', SawyerButtonPressTopdownEnvV2),
+     ('button-press-v2', SawyerButtonPressEnvV2),
      ('peg-insert-side-v2', SawyerPegInsertionSideEnvV2),
      ('window-open-v2', SawyerWindowOpenEnvV2),
      ('window-close-v2', SawyerWindowCloseEnvV2)), )
