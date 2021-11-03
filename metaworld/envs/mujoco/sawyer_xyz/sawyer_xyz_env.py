@@ -156,6 +156,14 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
         # Doesn't absorb "extra" kwargs, to ensure nothing's missed.
         pass
 
+    @property
+    def _freeze_rand_vec(self):
+        return self._freeze_rand_vec_
+
+    @_freeze_rand_vec.setter
+    def _freeze_rand_vec(self, val):
+        self._freeze_rand_vec_ = val
+
     def set_task(self, task):
         self._set_task_called = True
         data = pickle.loads(task.data)
