@@ -142,6 +142,7 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
         self._partially_observable = True
 
         self.hand_init_pos = None  # OVERRIDE ME
+        self.hand_init_quat = np.array([1, 0, 1, 0])
         self._target_pos = None  # OVERRIDE ME
         self._random_reset_space = None  # OVERRIDE ME
 
@@ -189,7 +190,7 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
             self.mocap_high,
         )
         self.data.set_mocap_pos('mocap', new_mocap_pos)
-        self.data.set_mocap_quat('mocap', np.array([1, 0, 1, 0]))
+        self.data.set_mocap_quat('mocap', self.hand_init_quat)
 
     def discretize_goal_space(self, goals):
         assert False
@@ -472,7 +473,7 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
     def _reset_hand(self, steps=50):
         for _ in range(steps):
             self.data.set_mocap_pos('mocap', self.hand_init_pos)
-            self.data.set_mocap_quat('mocap', np.array([1, 0, 1, 0]))
+            self.data.set_mocap_quat('mocap', self.hand_init_quat)
             self.do_simulation([-1, 1], self.frame_skip)
         self.init_tcp = self.tcp_center
 
