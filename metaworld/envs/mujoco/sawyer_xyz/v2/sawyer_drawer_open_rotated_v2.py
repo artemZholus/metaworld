@@ -7,7 +7,8 @@ from metaworld.envs.mujoco.sawyer_xyz.sawyer_xyz_env import SawyerXYZEnv, _asser
 from metaworld.envs.mujoco.utils.rotation import euler2quat, euler2mat
 
 class SawyerDrawerOpenRotatedEnvV2(SawyerXYZEnv):
-    def __init__(self, transparent_sawyer=False, hand_near_drawer=False):
+    def __init__(self, transparent_sawyer=False, 
+            hand_near_drawer=False, hand_angle_delta=0, fingers_closed=True):
 
         hand_low = (-0.5, 0.40, 0.05)
         hand_high = (0.5, 1, 0.5)
@@ -21,6 +22,8 @@ class SawyerDrawerOpenRotatedEnvV2(SawyerXYZEnv):
             transparent_sawyer=transparent_sawyer,
         )
         self.goal_delta = np.array([.0, -.16, .09])
+        self.fingers_closed = fingers_closed
+        self.hand_angle_delta = hand_angle_delta
         self.hand_near_drawer = hand_near_drawer
         self._angle = 0.
         self.init_config = {
@@ -51,7 +54,8 @@ class SawyerDrawerOpenRotatedEnvV2(SawyerXYZEnv):
         init_p[1] -= 0.1
         box_position = init_p.copy()
         # this is to align "switch" with train / test split
-        self._angle = (int(angle) + 7) % 360 
+        # print(self.hand_angle_delta)
+        self._angle = (int(angle) + 7 + self.hand_angle_delta) % 360 
         box_quat = euler2quat(np.array([0, 0, np.pi * angle / 180]))
         M = euler2mat(np.array([0, 0, np.pi * angle / 180]))
         # this is box_forth_edge - box_back_edge
@@ -77,7 +81,7 @@ class SawyerDrawerOpenRotatedEnvV2(SawyerXYZEnv):
         # [51; 53 + 180] -> [53; 53 + 180].
         # [53 + 180; 53 + 360] -> [53; 53 + 180].
         # 53 is is an angle of pose switch
-        angle = (angle - 53 + 360) % 180 + 53
+        angle = (angle - 53 + 360 + self.hand_angle_delta) % 180 + 53
         hand_quat = euler2quat(np.array([np.pi/2, angle/180 * np.pi, -np.pi/2]))
         # print(hand_quat)
         return box_position, box_quat, goal_position, hand_position, hand_quat, center
@@ -139,17 +143,18 @@ class SawyerDrawerOpenRotatedEnvV2(SawyerXYZEnv):
         self.hand_init_pos = hand_position
         self.hand_init_quat = hand_quat
         self._reset_hand()
-        self.do_simulation([1, -1], 300)
+        m = 1 if self.fingers_closed else -1
+        self.do_simulation([m, -m], 300)
         self.sim.model.body_pos[self.model.body_name2id('drawer')] = box_position
         self.sim.model.body_quat[self.model.body_name2id('drawer')] = box_quat
         self._set_obj_xyz(0)
         self._reset_hand()
-        self.do_simulation([1, -1], 300)
+        self.do_simulation([m, -m], 300)
         # self.data.set_mocap_pos('mocap', self.hand_init_pos)
         # self.data.set_mocap_quat('mocap', self.hand_init_quat)
         self._set_obj_xyz(0)
         self._reset_hand()
-        self.do_simulation([1, -1], 300)
+        self.do_simulation([m, -m], 300)
         # Set _target_pos to current drawer position (closed) minus an offset
         self._set_pos_site('goal', self._target_pos)
         return self._get_obs()
