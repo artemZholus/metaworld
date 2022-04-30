@@ -55,7 +55,7 @@ class SawyerDrawerOpenRotatedEnvV2(SawyerXYZEnv):
         box_position = init_p.copy()
         # this is to align "switch" with train / test split
         # print(self.hand_angle_delta)
-        self._angle = (int(angle) + 7 + self.hand_angle_delta) % 360 
+        self._angle = int(angle) % 360 
         box_quat = euler2quat(np.array([0, 0, np.pi * angle / 180]))
         M = euler2mat(np.array([0, 0, np.pi * angle / 180]))
         # this is box_forth_edge - box_back_edge
